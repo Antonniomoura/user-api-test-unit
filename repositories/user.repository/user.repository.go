@@ -4,8 +4,10 @@ import (
 	"awesomeProject/database"
 	"awesomeProject/models"
 	"context"
+	"fmt"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"log"
 	"time"
 )
 
@@ -40,6 +42,18 @@ func Read() (models.Users, error) {
 	}
 
 	return users, nil
+}
+func ReadById(userId string) (models.User, error) {
+	oid, _ := primitive.ObjectIDFromHex(userId)
+	var user models.User
+	fmt.Println(oid)
+	filter := bson.M{"name": "Antonio"}
+	err := collection.FindOne(ctx, filter).Decode(&user)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("found document %v", &user)
+	return user, nil
 }
 
 func Update(user models.User, userId string) error {

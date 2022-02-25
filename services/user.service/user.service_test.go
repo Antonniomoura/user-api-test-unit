@@ -48,6 +48,18 @@ func TestRead(t *testing.T) {
 	fmt.Println(users)
 }
 
+func TestReadById(t *testing.T) {
+	user, err := user_repository.ReadById("62181fda334eb171461bb6f0")
+	if err != nil {
+		t.Error("Error one")
+		t.Fail()
+		return
+	}
+
+	t.Log("sucesso one")
+	fmt.Println(user)
+}
+
 func TestDelete(t *testing.T) {
 
 	err := user_repository.Delete(userId)
